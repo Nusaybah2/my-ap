@@ -10,7 +10,6 @@ function Form() {
         category: "",
         status: "",
     })
-    const [success, setSuccess] = useState(false)
 
     useEffect(() => {
         let isMounted = true
@@ -56,9 +55,6 @@ function Form() {
     function handleChange(event) {
         const { name, value } = event.target
         setFormData((prev) => ({ ...prev, [name]: value }))
-        if (success) {
-            setSuccess(false)
-        }
     }
 
     function handleSubmit(event) {
@@ -71,7 +67,16 @@ function Form() {
             return
         }
 
-        setSuccess(true)
+        alert("Form submitted successfully!")
+        setFormData({
+            name: "",
+            description: "",
+            category: "",
+            status: "",
+        })
+    }
+
+    function handleReset() {
         setFormData({
             name: "",
             description: "",
@@ -82,7 +87,7 @@ function Form() {
 
     return (
         <div className="bg-white border rounded-2xl shadow-sm mt-8">
-            <div className="p-10">
+            <div className="p-8">
                 <form onSubmit={handleSubmit}>
                     <div className="mb-8">
                         <label className="block text-lg font-medium mb-3">
@@ -147,7 +152,7 @@ function Form() {
                                 />
                                 <span className="ml-2">Draft</span>
                             </label>
-                            
+
                             <label className="inline-flex items-center">
                                 <input
                                     type="radio"
@@ -172,10 +177,15 @@ function Form() {
                             </label>
                         </div>
                     </div>
-
-                    <input type="submit" value="Submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
+                    <div className="p-6 flex justify-end gap-3">
+                        <button type="button" onClick={handleReset} className="px-6 py-3 border rounded-xl">
+                            Reset
+                        </button>
+                        <button type="submit" className="px-6 py-3 bg-blue-500 text-white rounded-xl">
+                            Create Item
+                        </button>
+                    </div>
                 </form>
-                {success && <p className="success-message">Form submitted successfully!</p>}
             </div>
         </div>
     )
